@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+				<!-- thymeleaf : jstl과 유사한 역할 -->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div class="container">
+		<h2>게시글 목록</h2>
+		<table class="board_list">
+			<tr>
+				<th>글번호</th>
+				<th>제목</th>
+				<th>조회수</th>
+				<th>작성일</th>
+			</tr>
+			<tr th:if="${#lists.size(list)} > 0" th:each="board:${list}">
+				<td th:text="${board.boardIdx}"></td>
+				<td class="title"><a href="/board/boardDetail.do?boardIdx="
+				th:attrappend="href=${board.boardIdx}" th:text="${board.title}"></a></td>
+				<td th:text="${board.hitCnt}"></td>
+				<td th:text="${board.createdDate}"></td>
+			</tr>
+			<tr th:unless="${#lists.size(list)} > 0">
+				<td colspan="4">데이터 없습니다</td>
+			</tr>
+		</table>
+		<a href="/board/boardWriteForm.do" class="btn">글쓰기</a>
+	</div>
+</body>
+</html>
