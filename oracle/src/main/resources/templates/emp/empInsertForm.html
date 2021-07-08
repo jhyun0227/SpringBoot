@@ -1,8 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="../header.jsp" %>
-<!DOCTYPE html><html><head><meta charset="UTF-8">
-<title>Insert title here</title>
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<head><meta charset="UTF-8"><title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<style type="text/css"> .err {color: red; font-weight: bold; }</style>
+<script th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript">
 	function empNoChk() {
 		if (!frm.empno.value) {
@@ -10,15 +12,14 @@
 			frm.empno.focus();
 			return false;
 		}
-		$.post('empNoChk.html', 'empno='+frm.empno.value, function(data) {
+		$.post('/emp/empNoChk.do', 'empno='+frm.empno.value, function(data) {
 			$('#empNoChk').html(data);
 		});
 	}
-</script>
-</head><body>
+</script></head><body>
 <div class="container" align="center">
 	<h2 class="text-primary">직원정보 입력</h2>
-<form action="empInsert.html" method="post" name="frm">
+<form action="/emp/empInsert.do" method="post" name="frm">
 <table class="table table-bordered">
 	<tr><td>사번</td><td><input type="number" name="empno" 
 		required="required" autofocus="autofocus"> <input type="button"
@@ -30,9 +31,8 @@
 		required="required"></td></tr>
 	<tr><td>관리자 사번</td><td>
 		<select name="mgr">
-			<c:forEach var="emp" items="${empList }">
-				<option value="${emp.empno }">${emp.ename}(${emp.empno})</option>
-			</c:forEach>
+			<option th:each="emp:${empList}" th:value="${emp.empno}"
+				th:text="${emp.ename}+'('+${emp.empno}+')'"></option>
 		</select>
 	</td></tr>	
 	<tr><td>입사일</td><td><input type="date" name="hiredate" 
@@ -43,14 +43,12 @@
 		required="required"></td></tr>	
 	<tr><td>부서코드</td><td>
 		<select name="deptno">
-			<c:forEach var="dept" items="${deptList }">
-				<c:if test="${dept.deptno == deptno }">
-					<option value="${dept.deptno }" selected="selected">${dept.dname}(${dept.deptno})</option>
-				</c:if>
-				<c:if test="${dept.deptno != deptno }">
-					<option value="${dept.deptno }">${dept.dname}(${dept.deptno})</option>
-				</c:if>				
-			</c:forEach>
+			<option th:each="dept:${deptList}" th:value="${dept.deptno}"
+				th:if="${dept.deptno == deptno }" selected="selected"
+				th:text="${dept.dname}+'('+${dept.deptno}+')'"></option>
+			<option th:each="dept:${deptList}" th:if="${dept.deptno != deptno }" 
+				th:text="${dept.dname}+'('+${dept.deptno}+')'"
+				th:value="${dept.deptno}"></option>
 		</select>
 	</td></tr>
 	<tr><td colspan="2" align="center"><input type="submit" value="확인"

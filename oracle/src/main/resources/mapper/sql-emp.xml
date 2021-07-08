@@ -2,7 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ch.oracle.dao.EmpDao">
-	<select id="empList" parameterType="integer" resultType="emp">
+	<select id="list" parameterType="integer" resultType="emp">
 		select * from emp where deptno=#{deptno} order by empno
+	</select>
+	
+	<select id="empList" resultType="emp">
+		select * from emp order by empno
+	</select>
+
+	<select id="select" parameterType="integer" resultType="emp">
+		select * from emp where empno=#{empno}
+	</select>
+	
+	<insert id="insert" parameterType="emp">
+		insert into emp values(#{empno}, #{ename}, #{job}, #{mgr}, #{hiredate}, #{sal}, #{comm}, #{deptno})
+	</insert>
+	
+	<update id="update" parameterType="emp">
+		update emp set ename=#{ename}, job=#{job}, mgr=#{mgr}, hiredate=#{hiredate}, sal=#{sal}, comm=#{comm}, deptno=#{deptno} where empno=#{empno}
+	</update>
+	
+	<delete id="delete" parameterType="integer">
+		delete from emp where empno=#{empno}
+	</delete>
+	
+	<select id="allList" resultType="emp">
+		select e.*, dname, loc from emp e, dept d where e.deptno=d.deptno
 	</select>
 </mapper>

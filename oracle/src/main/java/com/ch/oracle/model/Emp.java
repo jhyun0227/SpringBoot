@@ -1,11 +1,7 @@
 package com.ch.oracle.model;
-
 import java.sql.Date;
-
 import org.apache.ibatis.type.Alias;
-
 import lombok.Data;
-
 @Data
 @Alias("emp")
 public class Emp {

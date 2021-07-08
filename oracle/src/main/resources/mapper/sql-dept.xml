@@ -6,20 +6,16 @@
 	<select id="deptList" resultType="dept">
 		select * from dept order by deptno
 	</select>
-	
 	<select id="select" parameterType="integer" resultType="dept">
 		select * from dept where deptno=#{deptno}
 	</select>
-	
 	<insert id="insert" parameterType="dept">
 		insert into dept values(#{deptno}, #{dname}, #{loc})
 	</insert>
-	
+	<delete id="delete" parameterType="integer">
+		delete from dept where deptno=#{deptno}
+	</delete>	
 	<update id="update" parameterType="dept">
 		update dept set dname=#{dname}, loc=#{loc} where deptno=#{deptno}
 	</update>
-	
-	<delete id="delete" parameterType="integer">
-		delete from dept where deptno=#{deptno}
-	</delete>
 </mapper>

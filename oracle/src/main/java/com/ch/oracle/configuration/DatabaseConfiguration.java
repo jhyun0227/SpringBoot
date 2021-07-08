@@ -1,5 +1,4 @@
 package com.ch.oracle.configuration;
-
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -12,41 +11,37 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-@Configuration // 설정 파일
+@Configuration   // 설정 파일
 @PropertySource("classpath:/application.properties")
 public class DatabaseConfiguration {
 	@Autowired
 	private ApplicationContext applicationContext;
-
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource.hikari")
 	public HikariConfig hikariConfig() {
 		return new HikariConfig();
 	}
-
 	@Bean
 	@ConfigurationProperties(prefix = "mybatis.configuration")
 	public org.apache.ibatis.session.Configuration mybatisConfig() {
 		return new org.apache.ibatis.session.Configuration();
 	}
-
 	@Bean
 	public DataSource dataSource() {
 		DataSource dataSource = new HikariDataSource(hikariConfig());
 		return dataSource;
 	}
-
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+		SqlSessionFactoryBean sqlSessionFactoryBean = 
+			new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
-		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/sql-*.xml"));
+		sqlSessionFactoryBean.setMapperLocations(
+			applicationContext.getResources("classpath:/mapper/**/sql-*.xml"));
 		sqlSessionFactoryBean.setConfiguration(mybatisConfig());
 		sqlSessionFactoryBean.setTypeAliasesPackage("com.ch.oracle.model");
 		return sqlSessionFactoryBean.getObject();
 	}
-
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
