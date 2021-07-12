@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<head><meta charset="UTF-8"><title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head><body>
+<span th:if="${result} > 0">
+	<script type="text/javascript">
+		alert("와우 ! 입력됐다");
+		location.href="/dept/deptList.do";
+	</script>
+</span>
+<span th:if="${result} == 0">
+	<script type="text/javascript">
+		alert("똑바로 해, 으이그");
+		history.back();
+	</script>
+</span>
+<span th:if="${result} == -1">
+	<script type="text/javascript">
+		alert("있는 부서인데, 왜그래 !!");
+		history.back();
+	</script>
+</span>
+</body>
+</html>

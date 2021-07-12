@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Insert title here</title>
+</head><body>
+<header th:fragment="headerFragment">
+	<div style="border:1px solid green;">
+		<a class="btn btn-success" href="/dept/deptList.do">부서목록</a>
+		<a class="btn btn-info" href="/dept/deptInsertForm.do">부서입력</a>
+		<a class="btn btn-default" href="/emp/empAllList.do">전직원 조회</a>
+		<a class="btn btn-warning" href="/index">Index</a>
+		<a class="btn btn-danger" href="/hello">Hello</a>
+	</div>
+</header>
+</body>
+</html>
